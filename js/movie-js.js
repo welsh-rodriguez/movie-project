@@ -34,15 +34,17 @@ const renderMovieHTML = () => {
 renderMovieHTML();
 
 let addMovie = (movieObj) => {
+
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(movieObj),
-    };
+    }
     return fetch(url, options)
-        .then(res => res.json().then(() => console.log("Movie added"))/* post was created successfully */)
+        .then(res => res.json()
+            .then((result) => console.log("Movie added", result))/* post was created successfully */)
 
 
 }
