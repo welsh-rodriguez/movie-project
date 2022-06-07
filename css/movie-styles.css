@@ -1,0 +1,12 @@
+.forms {
+    display: inline-block;
+}
+
+.addForm {
+    float:left;
+}
+
+.editForm {
+    float:right;
+    margin-left: 60px;
+}

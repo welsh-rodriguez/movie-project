@@ -7,14 +7,28 @@
 </head>
 <body>
 <div class="container">
-    <h2>Add a Movie</h2>
-    <form>
-        <label for="movieTitle">Title</label>
-        <input name="movieTitle" id="movieTitle" type="text">
-        <label for="movieRating">Rating</label>
-        <input name="movieRating" id="movieRating" type="text">
-        <button id="addMovie">Submit Movie</button>
-    </form>
+    <div class="forms">
+        <div class="addForm">
+            <h2>Add a Movie</h2>
+                <form>
+                    <label for="movieTitle">Title</label>
+                    <input name="movieTitle" id="movieTitle" type="text">
+                    <label for="movieRating">Rating</label>
+                    <input name="movieRating" id="movieRating" type="text">
+                    <button id="addMovie">Submit Movie</button>
+                </form>
+        </div>
+            <div class="editForm">
+                <h2>Edit a Movie</h2>
+                    <form class="edit">
+                        <label for="editedMovieTitle">Title</label>
+                        <input name="editedMovieTitle" id="editedMovieTitle" type="text">
+                        <label for="editedMovieRating">Rating</label>
+                        <input name="editedMovieRating" id="editedMovieRating" type="text">
+                        <button id="editMovie">Edit Movie</button>
+                    </form>
+            </div>
+    </div>
     <hr>
     <div id="library">
         <h2 class="title">Loading...</h2>

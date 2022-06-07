@@ -16,19 +16,23 @@ const renderMovieHTML = () => {
             <div>
             <h3>Title: ${movie.title}</h3>
             <p>Rating: ${movie.rating}</p>
-            <button data-id="${movie.id}">Edit</button>
-            <button data-id="${movie.id}">Delete</button>
+            <button class="edit" data-id="${movie.id}">Edit</button>
+            <button class="delete" data-id="${movie.id}">Delete</button>
             </div>
             `
         })
-        console.log(data);
-        console.log(movieCards);
+        // console.log(data);
+        // console.log(movieCards);
         document.getElementById("library").innerHTML = movieCards.join("");
 
     }).then((data) => {
-        for(let movie in data){
-            clickedEdit(movie)
-        }
+        document.querySelectorAll(".edit").forEach((editBtn) => {
+            editBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                let movieId = (editBtn.getAttribute('data-id'))
+                clickedEdit(movieId)
+            })
+        })
     })
 }
 renderMovieHTML();
@@ -43,7 +47,7 @@ let addMovie = (movieObj) => {
         },
         body: JSON.stringify(movieObj),
     }
-    return fetch(url, options)
+    return fetch(URL, options)
         .then(res => res.json()
             .then((result) => console.log("Movie added", result))/* post was created successfully */)
 
@@ -74,32 +78,18 @@ const editMovie = (movie) => {
 
     return fetch(`${URL}/${movie.id}`, options).then(resp => resp.json())
 };
-function clickedEdit(movie) {
-    document.querySelector(`data-id=${movie.id}`).addEventListener("click", function (e) {
-        e.preventDefault();
+function clickedEdit(movieId) {
         let newMovie = {
-            title: document.getElementById("movieTitle").value,
-            rating: document.getElementById("movieRating").value
+            title: document.getElementById("editedMovieTitle").value,
+            rating: document.getElementById("editedMovieRating").value,
+            id: movieId
         }
         editMovie(newMovie).then((res) => {
             console.log(res)
             renderMovieHTML()
         })
-    });
 }
 
-// function clickedEdit(movie) {
-//     document.querySelector(`data-id=${movie.id}`).addEventListener("click", function (e) {
-//         e.preventDefault();
-//         let newMovie = {
-//             title: document.getElementById("movieTitle").value,
-//             rating: document.getElementById("movieRating").value
-//         }
-//         editMovie(newMovie).then((res) => {
-//             console.log(res)
-//             renderMovieHTML()
-//         })
-//     });
-// }
+
 
 
