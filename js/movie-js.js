@@ -33,6 +33,7 @@ const renderMovieHTML = () => {
 }
 renderMovieHTML();
 
+//
 let addMovie = (movieObj) => {
 
     const options = {
