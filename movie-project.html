@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <title>Movie Project</title>
     <link rel="stylesheet" href="css/movie-styles.css">
-    <script src="js/movie-js.js"></script>
 </head>
 <body>
 <div class="container">
-    <div class="form">
-        <h2>Add a Movie</h2>
+    <h2>Add a Movie</h2>
+    <form>
         <label for="movieTitle">Title</label>
-        <input id="movieTitle" type="text">
+        <input name="movieTitle" id="movieTitle" type="text">
         <label for="movieRating">Rating</label>
-        <input id="movieRating" type="text">
-        <button id="addMovie" type="submit">Submit Movie</button>
-    </div>
+        <input name="movieRating" id="movieRating" type="text">
+        <button id="addMovie">Submit Movie</button>
+    </form>
     <hr>
     <div id="library">
         <h2 class="title">Loading...</h2>
@@ -23,7 +22,7 @@
 
 
 
-
+    <script src="js/movie-js.js"></script>
 </div>
 
 </body>
