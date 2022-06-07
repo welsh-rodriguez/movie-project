@@ -25,7 +25,7 @@ const renderMovieHTML = () => {
         // console.log(movieCards);
         document.getElementById("library").innerHTML = movieCards.join("");
 
-    }).then((data) => {
+    }).then(() => {
         document.querySelectorAll(".edit").forEach((editBtn) => {
             editBtn.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -33,7 +33,16 @@ const renderMovieHTML = () => {
                 clickedEdit(movieId)
             })
         })
-    })
+    }).then(() => {
+            document.querySelectorAll(".delete").forEach((deleteBtn) => {
+                deleteBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    let movieId = (deleteBtn.getAttribute('data-id'))
+                    deleteMovie(movieId)
+                })
+            })
+        }
+    )
 }
 renderMovieHTML();
 
@@ -88,6 +97,16 @@ function clickedEdit(movieId) {
             console.log(res)
             renderMovieHTML()
         })
+}
+
+function deleteMovie(id) {
+    let options = {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    return fetch(`${URL}/${id}`, options).then(() => console.log("The movie has been deleted successfully")).then(renderMovieHTML)
 }
 
 
