@@ -88,4 +88,18 @@ function clickedEdit(movie) {
     });
 }
 
+// function clickedEdit(movie) {
+//     document.querySelector(`data-id=${movie.id}`).addEventListener("click", function (e) {
+//         e.preventDefault();
+//         let newMovie = {
+//             title: document.getElementById("movieTitle").value,
+//             rating: document.getElementById("movieRating").value
+//         }
+//         editMovie(newMovie).then((res) => {
+//             console.log(res)
+//             renderMovieHTML()
+//         })
+//     });
+// }
+
 
