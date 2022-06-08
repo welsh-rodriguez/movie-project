@@ -32,6 +32,8 @@ const renderMovieHTML = () => {
                 e.preventDefault();
                 hideform()
                 let movieId = editBtn.getAttribute('data-id')
+                document.getElementById("editedMovieTitle").value = getMovieById(movieId).res.title
+                document.getElementById("editedMovieRating").value = getMovieById(movieId).then((res)=> res.rating)
                 document.querySelector('#editMovie').addEventListener('click', function (e){
                     e.preventDefault();
                     editMovie(clickedEdit(movieId));
