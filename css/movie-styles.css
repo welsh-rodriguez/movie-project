@@ -12,7 +12,7 @@ body {
     float:left;
 }
 
-.editForm {
+#editFormDiv {
     float:right;
     margin-left: 60px;
 }

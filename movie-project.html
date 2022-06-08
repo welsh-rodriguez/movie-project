@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <title>Movie Project</title>
     <link rel="stylesheet" href="css/movie-styles.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
 <nav>
@@ -31,14 +34,21 @@
                     <button id="addMovie">Submit Movie</button>
                 </form>
         </div>
-            <div class="editForm">
+            <div id="editFormDiv">
                 <h2>Edit a Movie</h2>
-                    <form class="edit">
+                    <form class="editForm">
                         <label for="editedMovieTitle">Title</label>
                         <input name="editedMovieTitle" id="editedMovieTitle" type="text">
                         <label for="editedMovieRating">Rating</label>
-                        <input name="editedMovieRating" id="editedMovieRating" type="text">
-                        <button id="editMovie">Edit Movie</button>
+<!--                        <input name="editedMovieRating" id="editedMovieRating" type="text">-->
+                        <select name="movieRating" id="editedMovieRating">
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1" selected="selected">1</option>
+                        </select>
+                        <button id="editMovie">Make Changes</button>
                     </form>
             </div>
     </div>
