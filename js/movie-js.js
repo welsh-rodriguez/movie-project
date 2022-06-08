@@ -1,18 +1,9 @@
 "use strict";
 
-const URL = 'https://intermediate-pale-papyrus.glitch.me/movies';
+const URL_MOVIES = 'https://intermediate-pale-papyrus.glitch.me/movies';
 
-//original
-// function getAllMovies() {
-//     return fetch(URL).then((response) => {
-//         return response.json()
-//     })
-// }
-
-//My attempt:
-//-Converted to arrow function.
 const getAllMovies = () => {
-    return fetch(URL)
+    return fetch(URL_MOVIES)
         .then(response => response.json()) // Why does the 'promise' show 'pending' when you: console.log(response.json())
         .catch(error => console.error(error));
 }
@@ -66,13 +57,13 @@ const addMovie = (movieObj) => {
         },
         body: JSON.stringify(movieObj),
     }
-    return fetch(URL, options)
+    return fetch(URL_MOVIES, options)
         .then(res => res.json()
             .then((result) => console.log("Movie added", result))/* post was created successfully */)
 
 
 }
-
+//ADD MOVIE EVENT
 document.getElementById("addMovie").addEventListener("click", (e) => {
     e.preventDefault();
     let newMovie = {
@@ -84,6 +75,8 @@ document.getElementById("addMovie").addEventListener("click", (e) => {
         console.log(res)
         renderMovieHTML()
     })
+    document.getElementById("movieTitle").value = '';
+    document.getElementById("movieRating").value = '';
 });
 
 const editMovie = (movie) => {
@@ -96,7 +89,7 @@ const editMovie = (movie) => {
         body: JSON.stringify(movie) // convert the JS object into a JSON String before sending it to the server.
     }
 
-    return fetch(`${URL}/${movie.id}`, options)
+    return fetch(`${URL_MOVIES}/${movie.id}`, options)
         .then(resp => resp.json())
 };
 const clickedEdit = (movieId) => {
@@ -119,10 +112,19 @@ const deleteMovie = (id) => {
             'Content-Type': 'application/json'
         }
     }
-    return fetch(`${URL}/${id}`, options)
+    return fetch(`${URL_MOVIES}/${id}`, options)
         .then(() => console.log("The movie has been deleted successfully"))
         .then(renderMovieHTML)
 }
-
-
-//Test for git hub!!!!!!!
+// MOVIE TEMPLATE:
+//
+// The Shawshank Redemption (1994)
+// The Godfather (1972)
+// The Dark Knight (2008)
+// The Godfather Part II (1974)
+// 12 Angry Men (1957)
+// Schindler's List (1993)
+// The Lord of the Rings: The Return of the King (2003)
+// Pulp Fiction (1994)
+// The Lord of the Rings: The Fellowship of the Ring (2001)
+// The Good, the Bad and the Ugly (1966)
