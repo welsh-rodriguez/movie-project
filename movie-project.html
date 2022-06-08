@@ -16,7 +16,14 @@
                     <label for="movieTitle">Title</label>
                     <input name="movieTitle" id="movieTitle" type="text">
                     <label for="movieRating">Rating</label>
-                    <input name="movieRating" id="movieRating" type="text">
+<!--                    <input name="movieRating" id="movieRating" type="text">-->
+                    <select name="movieRating" id="movieRating">
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                    </select>
                     <button id="addMovie">Submit Movie</button>
                 </form>
         </div>
@@ -26,7 +33,14 @@
                         <label for="editedMovieTitle">Title</label>
                         <input name="editedMovieTitle" id="editedMovieTitle" type="text">
                         <label for="editedMovieRating">Rating</label>
-                        <input name="editedMovieRating" id="editedMovieRating" type="text">
+<!--                        <input name="editedMovieRating" id="editedMovieRating" type="text">-->
+                        <select name="movieRating" id="editedMovieRating">
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1" selected="selected">1</option>
+                        </select>
                         <button id="editMovie">Make Changes</button>
                     </form>
             </div>

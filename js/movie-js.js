@@ -21,7 +21,7 @@ const renderMovieHTML = () => {
             <button class="delete" data-id="${movie.id}">Delete</button>
             </div>
             `
-        })
+        }).reverse()
         // console.log(data);
         // console.log(movieCards);
         document.getElementById("library").innerHTML = movieCards.join("");
@@ -35,6 +35,7 @@ const renderMovieHTML = () => {
                 document.querySelector('#editMovie').addEventListener('click', function (e){
                     e.preventDefault();
                     editMovie(clickedEdit(movieId));
+                    hideform()
             })
 
 
