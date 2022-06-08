@@ -1,6 +1,23 @@
 "use strict";
 
 const URL_MOVIES = 'https://intermediate-pale-papyrus.glitch.me/movies';
+const OMDB_API = `http://www.omdbapi.com/?i=tt3896198&apikey=2936fb10`
+const POSTER_OMDB = `http://img.omdbapi.com/?apikey=[2936fb10&]`
+
+
+const getOMDBMovies = () => {
+    return fetch(OMDB_API)
+        .then(res => res.json()).then(res => console.log(res))
+        .catch(error => console.error(error));
+}
+getOMDBMovies();
+
+const getMoviePosters = () => {
+    return fetch(POSTER_OMDB)
+        .then(res => res.json())
+}
+
+getMoviePosters()
 
 const getAllMovies = () => {
     return fetch(URL_MOVIES)
@@ -32,8 +49,8 @@ const renderMovieHTML = () => {
                 e.preventDefault();
                 hideform()
                 let movieId = editBtn.getAttribute('data-id')
-                document.getElementById("editedMovieTitle").value = getMovieById(movieId).res.title
-                document.getElementById("editedMovieRating").value = getMovieById(movieId).then((res)=> res.rating)
+                // document.getElementById("editedMovieTitle").value = getMovieById(movieId).res.title
+                // document.getElementById("editedMovieRating").value = getMovieById(movieId).then((res)=> res.rating)
                 document.querySelector('#editMovie').addEventListener('click', function (e){
                     e.preventDefault();
                     editMovie(clickedEdit(movieId));
@@ -44,7 +61,7 @@ const renderMovieHTML = () => {
 
         })
         })
-    }).then((res) => {
+    }).then(() => {
             document.querySelectorAll(".delete").forEach((deleteBtn) => {
                 deleteBtn.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -122,7 +139,7 @@ const deleteMovie = (id) => {
 }
 const getMovieById = (id) => {
     const url = `${URL_MOVIES}/${id}`;
-    return fetch(url).then(res => res.json())
+    return fetch(url).then(res => console.log(res.json()))
 }
 function hideform(){
     let editForm = document.querySelector('#editFormDiv')
