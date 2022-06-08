@@ -1,4 +1,4 @@
 .DS_STORE
 .idea/*
 *.iml
-keys.js
+myKeys.js

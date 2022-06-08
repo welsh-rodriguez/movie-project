@@ -1,6 +1,8 @@
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
+    color: white;
+    background: #222326; /*rgb(34,35,38)*/
 }
 .forms {
     display: inline-block;
@@ -16,8 +18,9 @@ body {
 }
 
 nav {
-    color: white;
-    background: black;
-    padding: .2em;
+    padding: .8em;
     font-size: 36px;
+}
+nav h1 {
+    margin: 0;
 }
