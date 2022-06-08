@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
 .forms {
     display: inline-block;
 }
@@ -9,4 +13,11 @@
 .editForm {
     float:right;
     margin-left: 60px;
+}
+
+nav {
+    color: white;
+    background: black;
+    padding: .2em;
+    font-size: 36px;
 }

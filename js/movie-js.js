@@ -21,7 +21,7 @@ const renderMovieHTML = () => {
             <button class="delete" data-id="${movie.id}">Delete</button>
             </div>
             `
-        })
+        }).reverse()
         // console.log(data);
         // console.log(movieCards);
         document.getElementById("library").innerHTML = movieCards.join("");
@@ -76,7 +76,7 @@ document.getElementById("addMovie").addEventListener("click", (e) => {
         renderMovieHTML()
     })
     document.getElementById("movieTitle").value = '';
-    document.getElementById("movieRating").value = '';
+    // document.getElementById("movieRating").value = '';
 });
 
 const editMovie = (movie) => {

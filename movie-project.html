@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <title>Movie Project</title>
     <link rel="stylesheet" href="css/movie-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
+<nav>
+    <h1>Movies</h1>
+</nav>
 <div class="container">
     <div class="forms">
         <div class="addForm">
@@ -14,7 +20,14 @@
                     <label for="movieTitle">Title</label>
                     <input name="movieTitle" id="movieTitle" type="text">
                     <label for="movieRating">Rating</label>
-                    <input name="movieRating" id="movieRating" type="text">
+<!--                    <input name="movieRating" id="movieRating" type="text">-->
+                    <select name="movieRating" id="movieRating">
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                    </select>
                     <button id="addMovie">Submit Movie</button>
                 </form>
         </div>
