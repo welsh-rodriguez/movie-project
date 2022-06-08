@@ -2,38 +2,62 @@
 
 const URL = 'https://intermediate-pale-papyrus.glitch.me/movies';
 
-function getAllMovies() {
-    return fetch(URL).then((response) => {
-        return response.json()
-    })
+//original
+// function getAllMovies() {
+//     return fetch(URL).then((response) => {
+//         return response.json()
+//     })
+// }
+
+//My attempt:
+//-Converted to arrow function.
+const getAllMovies = () => {
+    return fetch(URL)
+        .then(response => response.json()) // Why does the 'promise' show 'pending' when you: console.log(response.json())
+        .catch(error => console.error(error));
 }
 
 const renderMovieHTML = () => {
-    console.log("Rendering movie HTML")
-    getAllMovies().then((data) => {
+    // console.log("Rendering movie HTML")
+    getAllMovies()
+        .then((data) => {
         let movieCards = data.map(movie => {
             return `
             <div>
             <h3>Title: ${movie.title}</h3>
             <p>Rating: ${movie.rating}</p>
-            <button data-id="${movie.id}">Edit</button>
-            <button data-id="${movie.id}">Delete</button>
+            <button class="edit" data-id="${movie.id}">Edit</button>
+            <button class="delete" data-id="${movie.id}">Delete</button>
             </div>
             `
         })
-        console.log(data);
-        console.log(movieCards);
+        // console.log(data);
+        // console.log(movieCards);
         document.getElementById("library").innerHTML = movieCards.join("");
 
-    }).then((data) => {
-        for(let movie in data){
-            clickedEdit(movie)
+    }).then(() => {
+        document.querySelectorAll(".edit").forEach((editBtn) => {
+            editBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                let movieId = (editBtn.getAttribute('data-id'))
+                clickedEdit(movieId)
+            })
+        })
+    }).then(() => {
+            document.querySelectorAll(".delete").forEach((deleteBtn) => {
+                deleteBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    let movieId = (deleteBtn.getAttribute('data-id'))
+                    deleteMovie(movieId)
+                })
+            })
         }
-    })
+    )
 }
 renderMovieHTML();
 
-let addMovie = (movieObj) => {
+//
+const addMovie = (movieObj) => {
 
     const options = {
         method: 'POST',
@@ -42,20 +66,21 @@ let addMovie = (movieObj) => {
         },
         body: JSON.stringify(movieObj),
     }
-    return fetch(url, options)
+    return fetch(URL, options)
         .then(res => res.json()
             .then((result) => console.log("Movie added", result))/* post was created successfully */)
 
 
 }
 
-document.getElementById("addMovie").addEventListener("click", function (e) {
+document.getElementById("addMovie").addEventListener("click", (e) => {
     e.preventDefault();
     let newMovie = {
         title: document.getElementById("movieTitle").value,
         rating: document.getElementById("movieRating").value
     }
-    addMovie(newMovie).then((res) => {
+    addMovie(newMovie)
+        .then((res) => {
         console.log(res)
         renderMovieHTML()
     })
@@ -71,20 +96,34 @@ const editMovie = (movie) => {
         body: JSON.stringify(movie) // convert the JS object into a JSON String before sending it to the server.
     }
 
-    return fetch(`${URL}/${movie.id}`, options).then(resp => resp.json())
+    return fetch(`${URL}/${movie.id}`, options)
+        .then(resp => resp.json())
 };
-function clickedEdit(movie) {
-    document.querySelector(`data-id=${movie.id}`).addEventListener("click", function (e) {
-        e.preventDefault();
+const clickedEdit = (movieId) => {
         let newMovie = {
-            title: document.getElementById("movieTitle").value,
-            rating: document.getElementById("movieRating").value
+            title: document.getElementById("editedMovieTitle").value,
+            rating: document.getElementById("editedMovieRating").value,
+            id: movieId
         }
-        editMovie(newMovie).then((res) => {
+        editMovie(newMovie)
+            .then((res) => {
             console.log(res)
             renderMovieHTML()
         })
-    });
 }
+
+const deleteMovie = (id) => {
+    let options = {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    return fetch(`${URL}/${id}`, options)
+        .then(() => console.log("The movie has been deleted successfully"))
+        .then(renderMovieHTML)
+}
+
+
 
 
