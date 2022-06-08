@@ -1,18 +1,9 @@
 "use strict";
 
-const URL = 'https://intermediate-pale-papyrus.glitch.me/movies';
+const URL_MOVIES = 'https://intermediate-pale-papyrus.glitch.me/movies';
 
-//original
-// function getAllMovies() {
-//     return fetch(URL).then((response) => {
-//         return response.json()
-//     })
-// }
-
-//My attempt:
-//-Converted to arrow function.
 const getAllMovies = () => {
-    return fetch(URL)
+    return fetch(URL_MOVIES)
         .then(response => response.json()) // Why does the 'promise' show 'pending' when you: console.log(response.json())
         .catch(error => console.error(error));
 }
@@ -26,11 +17,11 @@ const renderMovieHTML = () => {
             <div>
             <h3>Title: ${movie.title}</h3>
             <p>Rating: ${movie.rating}</p>
-            <button class="edit" data-id="${movie.id}">Edit</button>
+            <button class="edit" data-id="${movie.id}" onclick="hideform()">Edit</button>
             <button class="delete" data-id="${movie.id}">Delete</button>
             </div>
             `
-        })
+        }).reverse()
         // console.log(data);
         // console.log(movieCards);
         document.getElementById("library").innerHTML = movieCards.join("");
@@ -39,11 +30,21 @@ const renderMovieHTML = () => {
         document.querySelectorAll(".edit").forEach((editBtn) => {
             editBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                let movieId = (editBtn.getAttribute('data-id'))
-                clickedEdit(movieId)
+                hideform()
+                let movieId = editBtn.getAttribute('data-id')
+                document.getElementById("editedMovieTitle").value = getMovieById(movieId).res.title
+                document.getElementById("editedMovieRating").value = getMovieById(movieId).then((res)=> res.rating)
+                document.querySelector('#editMovie').addEventListener('click', function (e){
+                    e.preventDefault();
+                    editMovie(clickedEdit(movieId));
+                    hideform()
             })
+
+
+
         })
-    }).then(() => {
+        })
+    }).then((res) => {
             document.querySelectorAll(".delete").forEach((deleteBtn) => {
                 deleteBtn.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -58,7 +59,6 @@ renderMovieHTML();
 
 //
 const addMovie = (movieObj) => {
-
     const options = {
         method: 'POST',
         headers: {
@@ -66,13 +66,13 @@ const addMovie = (movieObj) => {
         },
         body: JSON.stringify(movieObj),
     }
-    return fetch(URL, options)
+    return fetch(URL_MOVIES, options)
         .then(res => res.json()
             .then((result) => console.log("Movie added", result))/* post was created successfully */)
 
 
 }
-
+//ADD MOVIE EVENT
 document.getElementById("addMovie").addEventListener("click", (e) => {
     e.preventDefault();
     let newMovie = {
@@ -84,6 +84,8 @@ document.getElementById("addMovie").addEventListener("click", (e) => {
         console.log(res)
         renderMovieHTML()
     })
+    document.getElementById("movieTitle").value = '';
+    document.getElementById("movieRating").value = '';
 });
 
 const editMovie = (movie) => {
@@ -95,21 +97,16 @@ const editMovie = (movie) => {
         },
         body: JSON.stringify(movie) // convert the JS object into a JSON String before sending it to the server.
     }
-
-    return fetch(`${URL}/${movie.id}`, options)
-        .then(resp => resp.json())
+    console.log("Editing Movie:", movie)
+    return fetch(`${URL_MOVIES}/${movie.id}`, options)
+        .then(resp => resp.json()).then(() => renderMovieHTML())
 };
 const clickedEdit = (movieId) => {
-        let newMovie = {
-            title: document.getElementById("editedMovieTitle").value,
-            rating: document.getElementById("editedMovieRating").value,
-            id: movieId
-        }
-        editMovie(newMovie)
-            .then((res) => {
-            console.log(res)
-            renderMovieHTML()
-        })
+    return {
+        title: document.getElementById("editedMovieTitle").value,
+        rating: document.getElementById("editedMovieRating").value,
+        id: movieId
+    }
 }
 
 const deleteMovie = (id) => {
@@ -119,11 +116,34 @@ const deleteMovie = (id) => {
             'Content-Type': 'application/json'
         }
     }
-    return fetch(`${URL}/${id}`, options)
+    return fetch(`${URL_MOVIES}/${id}`, options)
         .then(() => console.log("The movie has been deleted successfully"))
         .then(renderMovieHTML)
+}
+const getMovieById = (id) => {
+    const url = `${URL_MOVIES}/${id}`;
+    return fetch(url).then(res => res.json())
+}
+function hideform(){
+    let editForm = document.querySelector('#editFormDiv')
+    if(editForm.style.display === 'none'){
+        editForm.style.display = 'block';
+    } else {
+        editForm.style.display = 'none';
+    }
 }
 
 
 
-
+// MOVIE TEMPLATE:
+//
+// The Shawshank Redemption (1994)
+// The Godfather (1972)
+// The Dark Knight (2008)
+// The Godfather Part II (1974)
+// 12 Angry Men (1957)
+// Schindler's List (1993)
+// The Lord of the Rings: The Return of the King (2003)
+// Pulp Fiction (1994)
+// The Lord of the Rings: The Fellowship of the Ring (2001)
+// The Good, the Bad and the Ugly (1966)
