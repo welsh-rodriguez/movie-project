@@ -17,7 +17,7 @@ const renderMovieHTML = () => {
             <div>
             <h3>Title: ${movie.title}</h3>
             <p>Rating: ${movie.rating}</p>
-            <button class="edit" data-id="${movie.id}">Edit</button>
+            <button class="edit" data-id="${movie.id}" onclick="hideform()">Edit</button>
             <button class="delete" data-id="${movie.id}">Delete</button>
             </div>
             `
@@ -30,11 +30,18 @@ const renderMovieHTML = () => {
         document.querySelectorAll(".edit").forEach((editBtn) => {
             editBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                let movieId = (editBtn.getAttribute('data-id'))
-                clickedEdit(movieId)
+                hideform()
+                let movieId = editBtn.getAttribute('data-id')
+                document.querySelector('#editMovie').addEventListener('click', function (e){
+                    e.preventDefault();
+                    editMovie(clickedEdit(movieId));
             })
+
+
+
         })
-    }).then(() => {
+        })
+    }).then((res) => {
             document.querySelectorAll(".delete").forEach((deleteBtn) => {
                 deleteBtn.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -49,7 +56,6 @@ renderMovieHTML();
 
 //
 const addMovie = (movieObj) => {
-
     const options = {
         method: 'POST',
         headers: {
@@ -88,21 +94,16 @@ const editMovie = (movie) => {
         },
         body: JSON.stringify(movie) // convert the JS object into a JSON String before sending it to the server.
     }
-
+    console.log("Editing Movie:", movie)
     return fetch(`${URL_MOVIES}/${movie.id}`, options)
-        .then(resp => resp.json())
+        .then(resp => resp.json()).then(() => renderMovieHTML())
 };
 const clickedEdit = (movieId) => {
-        let newMovie = {
-            title: document.getElementById("editedMovieTitle").value,
-            rating: document.getElementById("editedMovieRating").value,
-            id: movieId
-        }
-        editMovie(newMovie)
-            .then((res) => {
-            console.log(res)
-            renderMovieHTML()
-        })
+    return {
+        title: document.getElementById("editedMovieTitle").value,
+        rating: document.getElementById("editedMovieRating").value,
+        id: movieId
+    }
 }
 
 const deleteMovie = (id) => {
@@ -116,6 +117,21 @@ const deleteMovie = (id) => {
         .then(() => console.log("The movie has been deleted successfully"))
         .then(renderMovieHTML)
 }
+const getMovieById = (id) => {
+    const url = `${URL_MOVIES}/${id}`;
+    return fetch(url).then(res => res.json())
+}
+function hideform(){
+    let editForm = document.querySelector('#editFormDiv')
+    if(editForm.style.display === 'none'){
+        editForm.style.display = 'block';
+    } else {
+        editForm.style.display = 'none';
+    }
+}
+
+
+
 // MOVIE TEMPLATE:
 //
 // The Shawshank Redemption (1994)
